@@ -1,0 +1,14 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
+	xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+	<f:optionalBlock inline="true" name="beginOutput" title="Begin the Release file (checked), or create a Footer on the file (unchecked)?" checked="${instance.beginOutput}">
+		<f:entry name="patchOrder" title="Patch Order: " field="patchOrder">
+			<select name="patchOrder">
+				<option value="sequential">Sequential</option>
+				<option value="parallel">Parallel</option>
+			</select>
+		</f:entry>
+		<f:entry title="Build Name: " field="buildName">
+			<f:textbox default="$${BUILD_TAG}"/>
+		</f:entry>	
+	</f:optionalBlock>
+</j:jelly>

@@ -153,7 +153,7 @@ public class HeathviewBuilder extends Builder {
          * This human readable name is used in the configuration screen.
          */
         public String getDisplayName() {
-            return "Create/Update Text File";
+            return "Create/Update Heathview Configuration";
         }
 
         @Override

@@ -43,15 +43,15 @@ import java.io.IOException;
 
 public class HeathviewBuilder extends Builder {
 
-    private final String textFilePath;
+    private final String configFileType;
     private final String textFileContent;
     private final String fileOption;
     private final boolean useWorkspace;
 
     // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
-    public HeathviewBuilder(String textFilePath, String textFileContent,String fileOption,boolean useWorkspace){
-        this.textFilePath = textFilePath;
+    public HeathviewBuilder(String configFileType, String textFileContent,String fileOption,boolean useWorkspace){
+        this.configFileType = configFileType;
         this.textFileContent =  textFileContent;
         this.fileOption = fileOption;
         this.useWorkspace = useWorkspace;
@@ -61,8 +61,8 @@ public class HeathviewBuilder extends Builder {
     /**
      * We'll use this from the <tt>config.jelly</tt>.
      */
-    public String getTextFilePath() {
-        return textFilePath;
+    public String configFileType() {
+        return configFileType;
     }
     
     public String getTextFileContent(){
@@ -83,10 +83,10 @@ public class HeathviewBuilder extends Builder {
     	boolean result = false;
     	try {
     		
-    		String tempFilePath = textFilePath;
-    		if(this.useWorkspace && !(textFilePath.startsWith("${WORKSPACE}")||textFilePath.startsWith("$WORKSPACE")))
+    		String tempFilePath = configFileType;
+    		if(this.useWorkspace && !(configFileType.startsWith("${WxORKSPACE}")||configFileType.startsWith("$WORKSPACE")))
     		{
-    			tempFilePath = "${WORKSPACE}" + "/" + textFilePath;
+    			tempFilePath = "${WORKSPACE}" + "/" + configFileType;
     		}
     		
 			String resolvedFilePath = build.getEnvironment(listener).expand(tempFilePath);
@@ -120,10 +120,10 @@ public class HeathviewBuilder extends Builder {
         }
 
        
-        public FormValidation doCheckTextFilePath(@QueryParameter String value)
+        public FormValidation doCheckConfigFileType(@QueryParameter String value)
                 throws IOException, ServletException {
             if (value.length() == 0)
-                return FormValidation.error("Please set file path.");
+                return FormValidation.error("Please select configuration file type.");
 
             return FormValidation.ok();
         }

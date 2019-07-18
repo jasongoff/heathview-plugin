@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="us-ascii"?>
-<Heath>
-<Release create='open' name='jenkins-test-18'>
-<Patch create='open' name='jenkins-test-18'/>
-<Order type='sequential'>
-
-</Order>
-</Release>
-</Heath>

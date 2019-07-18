@@ -9,10 +9,9 @@
 	</parent>
 
 	<groupId>com.etas.jenkins.plugins</groupId>
-	<artifactId>text-file-operations</artifactId>
-	<version>1.3.3-SNAPSHOT</version>
+	<artifactId>heathview-plugin</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>hpi</packaging>
-	<url>https://wiki.jenkins-ci.org/display/JENKINS/Text+File+Operations+Plugin</url>
 
 	<build>
 		<plugins>
@@ -50,15 +49,8 @@
 		</pluginRepository>
 	</pluginRepositories>
 
-	<scm>
-	  <connection>scm:git:https://github.com/jenkinsci/text-file-operations-plugin.git</connection>
-	  <developerConnection>scm:git:https://github.com/jenkinsci/text-file-operations-plugin.git</developerConnection>
-	  <url>https://github.com/jenkinsci/text-file-operations-plugin</url>
-    <tag>HEAD</tag>
-  </scm>
-
-	<name>Text File Operations</name>
-	<description>Creates or updates text file with specified contents.</description>
+	<name>Heathview Plugin</name>
+	<description>Creates or updates Heathview Release and Build XML files.</description>
 	<organization>
 		<name>ETAS GmbH</name>
 	</organization>
@@ -67,6 +59,10 @@
 		<developer>
 		  <id>sankethpb</id>
 		  <name>Sanketh P B</name>
+		</developer>
+		<developer>
+			<id>jasongoff</id>
+			<name>Jason Goff</name>
 		</developer>
 	</developers>
 </project>

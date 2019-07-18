@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-package com.etas.jenkins.plugins.CreateTextFile;
+package com.etas.jenkins.plugins.HeathviewPlugin;
 import hudson.Launcher;
 import hudson.Extension;
 import hudson.util.FormValidation;
@@ -41,7 +41,7 @@ import javax.servlet.ServletException;
 
 import java.io.IOException;
 
-public class CreateFileBuilder extends Builder {
+public class HeathviewBuilder extends Builder {
 
     private final String textFilePath;
     private final String textFileContent;
@@ -50,7 +50,7 @@ public class CreateFileBuilder extends Builder {
 
     // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
-    public CreateFileBuilder(String textFilePath, String textFileContent,String fileOption,boolean useWorkspace){
+    public HeathviewBuilder(String textFilePath, String textFileContent,String fileOption,boolean useWorkspace){
         this.textFilePath = textFilePath;
         this.textFileContent =  textFileContent;
         this.fileOption = fileOption;
@@ -92,12 +92,12 @@ public class CreateFileBuilder extends Builder {
 			String resolvedFilePath = build.getEnvironment(listener).expand(tempFilePath);
 			String resolvedContent = build.getEnvironment(listener).expand(textFileContent);
 			
-			result = launcher.getChannel().call(new CreateFileTask(resolvedFilePath, resolvedContent, fileOption, listener));
+			result = launcher.getChannel().call(new HeathviewTask(resolvedFilePath, resolvedContent, fileOption, listener));
 			
 			
 		} catch (Exception e) {
 
-			listener.getLogger().println("Failed to invoke 'CreateFileTask': " + e.getMessage());
+			listener.getLogger().println("Failed to invoke 'HeathviewTask': " + e.getMessage());
 			e.printStackTrace(listener.getLogger());
 			return false;
 		} 

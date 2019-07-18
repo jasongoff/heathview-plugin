@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-package com.etas.jenkins.plugins.CreateTextFile;
+package com.etas.jenkins.plugins.HeathviewPlugin;
 
 import hudson.FilePath;
 import hudson.model.BuildListener;
@@ -36,7 +36,7 @@ import jenkins.security.Roles;
 
 import org.jenkinsci.remoting.RoleChecker;
 
-public class CreateFileTask implements Serializable,Callable<Boolean,IOException> {
+public class HeathviewTask implements Serializable,Callable<Boolean,IOException> {
 
 	private static final long serialVersionUID = 1L;
 	private final String fileContent;
@@ -45,7 +45,7 @@ public class CreateFileTask implements Serializable,Callable<Boolean,IOException
 	private BuildListener listener;
 
 	
-	public CreateFileTask(String filePath,String fileContent,String fileOption,BuildListener listener){
+	public HeathviewTask(String filePath,String fileContent,String fileOption,BuildListener listener){
 		this.filePath = filePath;
 		this.fileContent = fileContent;
 		this.fileOption = fileOption;

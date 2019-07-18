@@ -1,2 +1,2 @@
-# text-file-operations-plugin
-Jenkins plugin which creates or updates text file with specified contents.
+# heathview-plugin
+Jenkins plugin which creates or updates Build and Release XML config files for Heathview.

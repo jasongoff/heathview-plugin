@@ -56,7 +56,7 @@ public class HeathviewReleaseTask implements Serializable,Callable<Boolean,IOExc
 
 	@Override
 	public Boolean call() throws IOException {
-		
+		listener.getLogger().println("\nHEATHVIEW: Beginning Release File task");
 		try {
 			FilePath textFile = new FilePath(new File(filePath));
 			String finalFileContent = "";
@@ -90,7 +90,7 @@ public class HeathviewReleaseTask implements Serializable,Callable<Boolean,IOExc
 			e.printStackTrace(listener.getLogger());	
 			return false;
 		} 
-		listener.getLogger().println("File successfully created/updated at "+ filePath);
+		listener.getLogger().println("HEATHVIEW: Release File successfully created/updated at "+ filePath);
 		return true;
 	}
 

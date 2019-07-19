@@ -68,11 +68,11 @@ public class HeathviewReleaseTask implements Serializable,Callable<Boolean,IOExc
 				finalFileContent = finalFileContent.concat("<?xml version=\"1.0\" encoding=\"us-ascii\"?>\n")
 						.concat("<Heath>\n")
 						.concat(String.format("<Release create='open' name='%s'>\n", buildName))
-						.concat(String.format("<Order type='%s'>\n", patchOrder));
+						.concat(String.format("<Order type='%s'>\n</Order>\n", patchOrder));
 			} else {
 				if (fileExists) {
 					finalFileContent = textFile.readToString().concat(eol);
-					finalFileContent = finalFileContent.concat("</Order>\n</Release>\n</Heath>\n")
+					finalFileContent = finalFileContent.concat("</Release>\n</Heath>\n")
 							.replaceAll("\n", System.lineSeparator());
 				} else {
 					listener.getLogger().println("\nERROR: Cannot close Heathview Release File as there is no corresponding opening section or the file does not exist.");

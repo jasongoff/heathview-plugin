@@ -1,4 +1,4 @@
-package com.etas.jenkins.plugins.HeathviewPlugin;
+package com.etas.jenkins.plugins.heathviewplugin;
 import hudson.Launcher;
 import hudson.Extension;
 import hudson.model.AbstractBuild;
@@ -67,37 +67,33 @@ public class HeathviewReleaseBuilder extends Builder {
 
 
     @Override
-    public HVReleaseDescriptorImpl getDescriptor() {
-        return (HVReleaseDescriptorImpl)super.getDescriptor();
+    public DescriptorImpl getDescriptor() {
+        return DESCRIPTOR;
     }
 
+    @Extension
+    public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
 
-    @Extension // This indicates to Jenkins that this is an implementation of an extension point.
-    public static final class HVReleaseDescriptorImpl extends BuildStepDescriptor<Builder> {
+    public static class DescriptorImpl extends BuildStepDescriptor<Builder> {
 
-        public HVReleaseDescriptorImpl() {
-            load();
-        }
-
-        public boolean isApplicable(Class<? extends AbstractProject> aClass) {
-            // Indicates that this builder can be used with all kinds of project types 
-            return true;
-        }
-
-        /**
-         * This human readable name is used in the configuration screen.
-         */
-        public String getDisplayName() {
-            return "Heathview: Create Release File header or footer XML section.";
+        public DescriptorImpl() {
+            super(HeathviewReleaseBuilder.class);
         }
 
         @Override
-        public boolean configure(StaplerRequest req, JSONObject formData) throws FormException {
-           
-            save();
-            return super.configure(req,formData);
+        public boolean isApplicable(Class<? extends AbstractProject> aClass) {
+            return true;
+        }
+
+        @Override
+		public HeathviewReleaseBuilder newInstance(StaplerRequest req, JSONObject formData) throws FormException {
+			return req.bindJSON(HeathviewReleaseBuilder.class, formData);
         }
         
+        @Override
+        public String getDisplayName() {
+            return "Heathview: Create Release File header or footer XML section.";
+        }        
     }
 }
 

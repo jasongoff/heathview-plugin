@@ -1,4 +1,4 @@
-package com.etas.jenkins.plugins.HeathviewPlugin;
+package com.etas.jenkins.plugins.heathviewplugin;
 import hudson.Launcher;
 import hudson.Extension;
 import hudson.model.AbstractBuild;
@@ -11,7 +11,7 @@ import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 
-public class HeathviewPatchBuilder extends Builder {
+public class HeathviewPatchBuilder extends Builder  {
 
     public static final String FILE_NAME="${WORKSPACE}/HVPatch.XML";
     private final String buildName;
@@ -54,39 +54,34 @@ public class HeathviewPatchBuilder extends Builder {
         return result;
     }
 
-
     @Override
-    public HVPatchDescriptorImpl getDescriptor() {
-        return (HVPatchDescriptorImpl)super.getDescriptor();
+    public DescriptorImpl getDescriptor() {
+        return DESCRIPTOR;
     }
 
+    @Extension
+    public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
 
-    @Extension // This indicates to Jenkins that this is an implementation of an extension point.
-    public static final class HVPatchDescriptorImpl extends BuildStepDescriptor<Builder> {
+    public static class DescriptorImpl extends BuildStepDescriptor<Builder> {
 
-        public HVPatchDescriptorImpl() {
-            load();
-        }
-
-        public boolean isApplicable(Class<? extends AbstractProject> aClass) {
-            // Indicates that this builder can be used with all kinds of project types 
-            return true;
-        }
-
-        /**
-         * This human readable name is used in the configuration screen.
-         */
-        public String getDisplayName() {
-            return "Heathview: Create Patch File header or footer XML section.";
+        public DescriptorImpl() {
+            super(HeathviewPatchBuilder.class);
         }
 
         @Override
-        public boolean configure(StaplerRequest req, JSONObject formData) throws FormException {
-           
-            save();
-            return super.configure(req,formData);
+        public boolean isApplicable(Class<? extends AbstractProject> aClass) {
+            return true;
+        }
+
+        @Override
+		public HeathviewPatchBuilder newInstance(StaplerRequest req, JSONObject formData) throws FormException {
+			return req.bindJSON(HeathviewPatchBuilder.class, formData);
         }
         
+        @Override
+        public String getDisplayName() {
+            return "Heathview: Create Patch File header or footer XML section.";
+        }        
     }
 }
 

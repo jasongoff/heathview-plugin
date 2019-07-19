@@ -1,4 +1,4 @@
-package com.etas.jenkins.plugins.HeathviewPlugin;
+package com.etas.jenkins.plugins.heathviewplugin;
 
 import hudson.FilePath;
 import hudson.model.BuildListener;

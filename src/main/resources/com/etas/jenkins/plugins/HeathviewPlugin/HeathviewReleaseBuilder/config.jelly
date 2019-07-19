@@ -3,8 +3,8 @@
 	<f:optionalBlock inline="true" name="beginOutput" title="Begin the Release file (checked), or create a Footer on the file (unchecked)?" checked="${instance.beginOutput}">
 		<f:entry name="patchOrder" title="Patch Order: " field="patchOrder">
 			<select name="patchOrder">
-				<option value="sequential">Sequential</option>
-				<option value="parallel">Parallel</option>
+				<option value="sequential" selected="${instance.patchOrder.equals('sequential')? 'true':null}">Sequential</option>
+				<option value="parallel" selected="${instance.patchOrder.equals('parallel')? 'true':null}">Parallel</option>
 			</select>
 		</f:entry>
 		<f:entry title="Release Name: " field="buildName">

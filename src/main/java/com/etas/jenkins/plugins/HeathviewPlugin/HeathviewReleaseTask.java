@@ -68,7 +68,6 @@ public class HeathviewReleaseTask implements Serializable,Callable<Boolean,IOExc
 				finalFileContent = finalFileContent.concat("<?xml version=\"1.0\" encoding=\"us-ascii\"?>\n")
 						.concat("<Heath>\n")
 						.concat(String.format("<Release create='open' name='%s'>\n", buildName))
-						.concat(String.format("<Patch create='open' name='%s'/>\n", buildName))
 						.concat(String.format("<Order type='%s'>\n", patchOrder));
 			} else {
 				if (fileExists) {

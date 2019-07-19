@@ -7,7 +7,7 @@
 				<option value="parallel">Parallel</option>
 			</select>
 		</f:entry>
-		<f:entry title="Build Name: " field="buildName">
+		<f:entry title="Release Name: " field="buildName">
 			<f:textbox default="$${BUILD_TAG}"/>
 		</f:entry>	
 	</f:optionalBlock>

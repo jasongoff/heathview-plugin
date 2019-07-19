@@ -11,29 +11,18 @@ import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 
-public class HeathviewReleaseBuilder extends Builder {
-    public static final String FILE_NAME = "${WORKSPACE}/HVRelease.XML";
-    private final String patchOrder;
+public class HeathviewPatchBuilder extends Builder {
+
+    public static final String FILE_NAME="${WORKSPACE}/HVPatch.XML";
     private final String buildName;
     private final boolean beginOutput;
 
-    
-
-    // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
-    public HeathviewReleaseBuilder(boolean beginOutput, String patchOrder, String buildName) {
-        this.patchOrder = patchOrder;
+    public HeathviewPatchBuilder(boolean beginOutput, String buildName) {
         this.buildName =  buildName;   
         this.beginOutput = beginOutput;     
     }
 
-    /**
-     * We'll use this from the <tt>config.jelly</tt>.
-     */
-    public String patchOrder() {
-        return patchOrder;
-    }
-    
     public String getBuildName(){
     	return buildName;
     }
@@ -47,17 +36,17 @@ public class HeathviewReleaseBuilder extends Builder {
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
     	boolean result = false;
     	try {
-            HeathviewReleaseTask task = new HeathviewReleaseTask()
+            HeathviewPatchTask task = new HeathviewPatchTask()
                                 .withBeginOutput(beginOutput)
                                 .withListener(listener)
-                                .withFilepath(build.getEnvironment(listener).expand(HeathviewReleaseBuilder.FILE_NAME))
-                                .withBuildName(build.getEnvironment(listener).expand(buildName))
-                                .withPatchOrder(build.getEnvironment(listener).expand(patchOrder));
+                                .withPatchFilepath(build.getEnvironment(listener).expand(HeathviewPatchBuilder.FILE_NAME))
+                                .withReleaseFilepath(build.getEnvironment(listener).expand(HeathviewReleaseBuilder.FILE_NAME))
+                                .withBuildName(build.getEnvironment(listener).expand(buildName));
 
             result = launcher.getChannel().call(task);
 		} catch (Exception e) {
 
-			listener.getLogger().println("HEATHVIEW: Failed to invoke 'HeathviewReleaseTask': " + e.getMessage());
+			listener.getLogger().println("\nHEATHVIEW: Failed to invoke 'HeathviewPatchTask': " + e.getMessage());
 			e.printStackTrace(listener.getLogger());
 			return false;
 		} 
@@ -67,15 +56,15 @@ public class HeathviewReleaseBuilder extends Builder {
 
 
     @Override
-    public HVReleaseDescriptorImpl getDescriptor() {
-        return (HVReleaseDescriptorImpl)super.getDescriptor();
+    public HVPatchDescriptorImpl getDescriptor() {
+        return (HVPatchDescriptorImpl)super.getDescriptor();
     }
 
 
     @Extension // This indicates to Jenkins that this is an implementation of an extension point.
-    public static final class HVReleaseDescriptorImpl extends BuildStepDescriptor<Builder> {
+    public static final class HVPatchDescriptorImpl extends BuildStepDescriptor<Builder> {
 
-        public HVReleaseDescriptorImpl() {
+        public HVPatchDescriptorImpl() {
             load();
         }
 
@@ -88,7 +77,7 @@ public class HeathviewReleaseBuilder extends Builder {
          * This human readable name is used in the configuration screen.
          */
         public String getDisplayName() {
-            return "Heathview: Create Release File header or footer XML section.";
+            return "Heathview: Create Patch File header or footer XML section.";
         }
 
         @Override

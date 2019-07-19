@@ -1,2 +1,4 @@
 .vscode/settings.json
 work/*
+.settings/*.*
+.settings/org.eclipse.jdt.core.prefs

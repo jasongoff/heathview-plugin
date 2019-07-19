@@ -1,27 +1,3 @@
-/*
-The MIT License (MIT)
-
-Copyright (c) 2015 Sanketh P B
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
- */
-
 package com.etas.jenkins.plugins.HeathviewPlugin;
 
 import hudson.FilePath;
@@ -44,6 +20,9 @@ public class HeathviewReleaseTask implements Serializable,Callable<Boolean,IOExc
 	private BuildListener listener;
 	private String buildName;
 	private boolean beginOutput;
+	
+	public HeathviewReleaseTask(){
+	}
 
 	public HeathviewReleaseTask withListener(BuildListener listener) {
 		this.listener = listener;
@@ -70,10 +49,6 @@ public class HeathviewReleaseTask implements Serializable,Callable<Boolean,IOExc
 		return this;
 	}
 
-	
-	public HeathviewReleaseTask(){
-	}
-
 	@Override
 	public void checkRoles(RoleChecker checker) throws SecurityException {
 		checker.check(this, Roles.SLAVE);		
@@ -86,27 +61,26 @@ public class HeathviewReleaseTask implements Serializable,Callable<Boolean,IOExc
 			FilePath textFile = new FilePath(new File(filePath));
 			String finalFileContent = "";
 			String eol = System.getProperty("line.separator");
-			
-			if(textFile.exists()){
-				listener.getLogger().println(String.format("File already exists at '%s'", filePath));
-				if (beginOutput) 
-					textFile.deleteContents();
-				else
-				 finalFileContent = textFile.readToString().concat(eol);
-			}
-
+			boolean fileExists = textFile.exists();
+					
 			if (beginOutput) {
-			finalFileContent = finalFileContent.concat("<?xml version=\"1.0\" encoding=\"us-ascii\"?>\n")
-					.concat("<Heath>\n")
-					.concat(String.format("<Release create='open' name='%s'>\n", buildName))
-					.concat(String.format("<Patch create='open' name='%s'/>\n", buildName))
-					.concat(String.format("<Order type='%s'>\n", patchOrder));
+				if (fileExists) textFile.deleteContents();
+				finalFileContent = finalFileContent.concat("<?xml version=\"1.0\" encoding=\"us-ascii\"?>\n")
+						.concat("<Heath>\n")
+						.concat(String.format("<Release create='open' name='%s'>\n", buildName))
+						.concat(String.format("<Patch create='open' name='%s'/>\n", buildName))
+						.concat(String.format("<Order type='%s'>\n", patchOrder));
 			} else {
-				finalFileContent = finalFileContent.concat("</Order>\n</Release>\n</Heath>\n")
-															.replaceAll("\n", System.lineSeparator());
+				if (fileExists) {
+					finalFileContent = textFile.readToString().concat(eol);
+					finalFileContent = finalFileContent.concat("</Order>\n</Release>\n</Heath>\n")
+							.replaceAll("\n", System.lineSeparator());
+				} else {
+					listener.getLogger().println("\nERROR: Cannot close Heathview Release File as there is no corresponding opening section or the file does not exist.");
+					return false;
+				}
 
-			}
-			
+			}			
 			listener.getLogger().println(String.format("File content is:\n %s", finalFileContent));
 			textFile.write(finalFileContent, "UTF-8");
 			

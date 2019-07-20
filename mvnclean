@@ -1,0 +1,4 @@
+mvn clean
+rm -rf work
+mvn hpi:run
+

@@ -16,15 +16,16 @@ public class HeathviewReleaseBuilder extends Builder {
     private final String patchOrder;
     private final String buildName;
     private final boolean beginOutput;
-
+    private final boolean restartEnvironment;
     
 
     // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
-    public HeathviewReleaseBuilder(boolean beginOutput, String patchOrder, String buildName) {
+    public HeathviewReleaseBuilder(boolean beginOutput, String patchOrder, String buildName, boolean restartEnvironment) {
         this.patchOrder = patchOrder;
         this.buildName =  buildName;   
         this.beginOutput = beginOutput;     
+        this.restartEnvironment = restartEnvironment;
     }
 
     /**
@@ -41,6 +42,10 @@ public class HeathviewReleaseBuilder extends Builder {
     public boolean getBeginOutput() {
         return beginOutput;
     }
+
+    public boolean restartEnvironment() {
+        return restartEnvironment;
+    }
     
     @SuppressWarnings("rawtypes")
 	@Override
@@ -52,7 +57,8 @@ public class HeathviewReleaseBuilder extends Builder {
                                 .withListener(listener)
                                 .withFilepath(build.getEnvironment(listener).expand(HeathviewReleaseBuilder.FILE_NAME))
                                 .withBuildName(build.getEnvironment(listener).expand(buildName))
-                                .withPatchOrder(patchOrder);
+                                .withPatchOrder(patchOrder)
+                                .withRestartEnvironment(restartEnvironment);
 
             result = launcher.getChannel().call(task);
 		} catch (Exception e) {

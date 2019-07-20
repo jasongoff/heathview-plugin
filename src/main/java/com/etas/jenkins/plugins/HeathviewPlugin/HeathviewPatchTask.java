@@ -77,13 +77,13 @@ public class HeathviewPatchTask implements Serializable,Callable<Boolean,IOExcep
 				if (patchFileExists) patchFile.deleteContents();
 				finalFileContent = finalFileContent.concat("<?xml version=\"1.0\" encoding=\"us-ascii\"?>\n")
 						.concat("<Heath>\n")
-						.concat(String.format("<Patch create='open' name='%s'>\n", buildName));
+						.concat(String.format("\t<Patch create='open' name='%s'>\n", buildName));
 
-				releaseFileContent = releaseFileContent.concat(String.format("<Patch create='open' name='%s'/>\n", buildName));
+				releaseFileContent = releaseFileContent.concat(String.format("\t\t<Patch create='open' name='%s'/>\n", buildName));
 			} else {
 				if (patchFileExists) {
 					finalFileContent = patchFile.readToString().concat(eol);
-					finalFileContent = finalFileContent.concat("</Patch>\n</Heath>\n").replaceAll("\n", System.lineSeparator());
+					finalFileContent = finalFileContent.concat("\t</Patch>\n</Heath>\n").replaceAll("\n", System.lineSeparator());
 				} else {
 					listener.getLogger().println("\nERROR: Cannot close Heathview Patch File as there is no corresponding opening section or the file does not exist.");
 					return false;

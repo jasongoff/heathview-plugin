@@ -12,5 +12,9 @@
 		<f:entry title="Release Name:" field="buildName">
 			<f:textbox default="$${BUILD_TAG}"/>
 		</f:entry>	
+
+		<f:entry title="Stop and restart environment?" field="restartEnvironment">
+		  <f:checkbox />
+		</f:entry>
 	</f:optionalBlock>
 </j:jelly>

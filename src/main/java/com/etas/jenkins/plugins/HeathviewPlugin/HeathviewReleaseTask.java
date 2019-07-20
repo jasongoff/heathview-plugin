@@ -20,6 +20,7 @@ public class HeathviewReleaseTask implements Serializable,Callable<Boolean,IOExc
 	private BuildListener listener;
 	private String buildName;
 	private boolean beginOutput;
+	private boolean restartEnvironment;
 	
 	public HeathviewReleaseTask(){
 	}
@@ -49,6 +50,11 @@ public class HeathviewReleaseTask implements Serializable,Callable<Boolean,IOExc
 		return this;
 	}
 
+	public HeathviewReleaseTask withRestartEnvironment(boolean restartEnvironment) {
+		this.restartEnvironment = restartEnvironment;
+		return this;
+	}
+
 	@Override
 	public void checkRoles(RoleChecker checker) throws SecurityException {
 		checker.check(this, Roles.SLAVE);		
@@ -67,12 +73,13 @@ public class HeathviewReleaseTask implements Serializable,Callable<Boolean,IOExc
 				if (fileExists) textFile.deleteContents();
 				finalFileContent = finalFileContent.concat("<?xml version=\"1.0\" encoding=\"us-ascii\"?>\n")
 						.concat("<Heath>\n")
-						.concat(String.format("<Release create='open' name='%s'>\n", buildName))
-						.concat(String.format("<Order type='%s'>\n</Order>\n", patchOrder));
+						.concat(String.format("\t<Release create='open' name='%s' env_stop='%s'>\n", 
+																				buildName, restartEnvironment ? "true":"false"))
+						.concat(String.format("\t\t<Order type='%s'>\n</Order>\n", patchOrder));
 			} else {
 				if (fileExists) {
 					finalFileContent = textFile.readToString().concat(eol);
-					finalFileContent = finalFileContent.concat("</Release>\n</Heath>\n")
+					finalFileContent = finalFileContent.concat("\t</Release>\n</Heath>\n")
 							.replaceAll("\n", System.lineSeparator());
 				} else {
 					listener.getLogger().println("\nERROR: Cannot close Heathview Release File as there is no corresponding opening section or the file does not exist.");

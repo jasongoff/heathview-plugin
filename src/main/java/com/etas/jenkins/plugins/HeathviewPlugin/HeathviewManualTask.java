@@ -60,7 +60,7 @@ public class HeathviewManualTask implements Serializable,Callable<Boolean,IOExce
 			if (fileExists) {
 				finalFileContent = textFile.readToString()
 					.concat(eol)
-					.concat(String.format("<%s task='%s'>", taskType, taskDetail));
+					.concat(String.format("\t\t<%s task='%s'/>", taskType, taskDetail));
 			} else {
 				listener.getLogger().println("\nERROR: Cannot create Heathview Manual Task as there is no previous Release File section.");
 				return false;

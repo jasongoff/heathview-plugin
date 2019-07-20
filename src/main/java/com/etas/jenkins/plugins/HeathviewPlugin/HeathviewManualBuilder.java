@@ -42,7 +42,7 @@ public class HeathviewManualBuilder extends Builder {
     	try {
             HeathviewManualTask task = new HeathviewManualTask()
                                 .withManualTaskType(manualTaskType)
-                                .withTaskDetail(taskDetail)
+                                .withTaskDetail(build.getEnvironment(listener).expand(taskDetail))
                                 .withListener(listener)
                                 .withFilepath(build.getEnvironment(listener).expand(HeathviewReleaseBuilder.FILE_NAME));
 

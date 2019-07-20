@@ -1,12 +1,12 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
 	xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-		<f:entry name="manualTaskType" title="Manual Task Type: " field="manualTaskType">
+		<f:entry name="manualTaskType" title="Manual Task Type:" field="manualTaskType">
 			<select name="manualTaskType">
 				<option value="PreTask" selected="${instance.manualTaskType.equals('PreTask')? 'true':null}">Pre-Task</option>
 				<option value="PostTask" selected="${instance.manualTaskType.equals('PostTask')? 'true':null}">Post-Task</option>
 			</select>
 		</f:entry>
-		<f:entry title="TaskDetail: " field="taskDetail">
+		<f:entry title="TaskDetail:" field="taskDetail">
 			<f:textarea />
 		</f:entry>	
 </j:jelly>

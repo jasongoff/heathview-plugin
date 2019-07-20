@@ -52,7 +52,7 @@ public class HeathviewReleaseBuilder extends Builder {
                                 .withListener(listener)
                                 .withFilepath(build.getEnvironment(listener).expand(HeathviewReleaseBuilder.FILE_NAME))
                                 .withBuildName(build.getEnvironment(listener).expand(buildName))
-                                .withPatchOrder(build.getEnvironment(listener).expand(patchOrder));
+                                .withPatchOrder(patchOrder);
 
             result = launcher.getChannel().call(task);
 		} catch (Exception e) {

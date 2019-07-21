@@ -66,7 +66,6 @@ public class HeathviewReleaseTask implements Serializable,Callable<Boolean,IOExc
 		try {
 			FilePath textFile = new FilePath(new File(filePath));
 			String finalFileContent = "";
-			String eol = System.getProperty("line.separator");
 			boolean fileExists = textFile.exists();
 					
 			if (beginOutput) {
@@ -78,7 +77,7 @@ public class HeathviewReleaseTask implements Serializable,Callable<Boolean,IOExc
 						.concat(String.format("\t\t<Order type='%s'>\n</Order>\n", patchOrder));
 			} else {
 				if (fileExists) {
-					finalFileContent = textFile.readToString().concat(eol);
+					finalFileContent = textFile.readToString();
 					finalFileContent = finalFileContent.concat("\t</Release>\n</Heath>\n")
 							.replaceAll("\n", System.lineSeparator());
 				} else {
@@ -87,16 +86,12 @@ public class HeathviewReleaseTask implements Serializable,Callable<Boolean,IOExc
 				}
 
 			}			
-			listener.getLogger().println(String.format("File content is:\n %s", finalFileContent));
-			textFile.write(finalFileContent, "UTF-8");
-			
+			textFile.write(finalFileContent, "UTF-8");			
 		} catch (Exception e) {
-
 			listener.getLogger().println("Failed to create/update file. " + e.getMessage());
 			e.printStackTrace(listener.getLogger());	
 			return false;
 		} 
-		listener.getLogger().println("HEATHVIEW: Release File successfully created/updated at "+ filePath);
 		return true;
 	}
 

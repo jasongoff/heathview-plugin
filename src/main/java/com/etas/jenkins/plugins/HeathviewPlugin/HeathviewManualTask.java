@@ -54,18 +54,15 @@ public class HeathviewManualTask implements Serializable,Callable<Boolean,IOExce
 		try {
 			FilePath textFile = new FilePath(new File(filePath));
 			String finalFileContent = "";
-			String eol = System.getProperty("line.separator");
 			boolean fileExists = textFile.exists();
 					
 			if (fileExists) {
 				finalFileContent = textFile.readToString()
-					.concat(eol)
-					.concat(String.format("\t\t<%s task='%s'/>", taskType, taskDetail));
+					.concat(String.format("\t\t<%s task='%s'/>\n", taskType, taskDetail));
 			} else {
 				listener.getLogger().println("\nERROR: Cannot create Heathview Manual Task as there is no previous Release File section.");
 				return false;
 			}
-			listener.getLogger().println(String.format("File content is:\n %s", finalFileContent));
 			textFile.write(finalFileContent, "UTF-8");
 			
 		} catch (Exception e) {
@@ -74,7 +71,6 @@ public class HeathviewManualTask implements Serializable,Callable<Boolean,IOExce
 			e.printStackTrace(listener.getLogger());	
 			return false;
 		} 
-		listener.getLogger().println("HEATHVIEW: Manual Task successfully created in "+ filePath);
 		return true;
 	}
 

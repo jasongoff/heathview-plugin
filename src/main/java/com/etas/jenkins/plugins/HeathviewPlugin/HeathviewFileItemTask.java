@@ -12,34 +12,38 @@ import jenkins.security.Roles;
 
 import org.jenkinsci.remoting.RoleChecker;
 
-public class HeathviewElementTask implements Serializable,Callable<Boolean,IOException> {
+public class HeathviewFileItemTask implements Serializable,Callable<Boolean,IOException> {
 
 	private static final long serialVersionUID = 1L;
 	private String patchFilePath;
 	private BuildListener listener;
-	private String elementName;
-	private boolean beginOutput;
+	private String source;
+	private String target;
+	private String type;
 	
-	public HeathviewElementTask(){
+	public HeathviewFileItemTask(){
 	}
 
-	public HeathviewElementTask withListener(BuildListener listener) {
+	public HeathviewFileItemTask withListener(BuildListener listener) {
 		this.listener = listener;
 		return this;
 	}
 
-	public HeathviewElementTask withPatchFilepath(String filePath) {
+	public HeathviewFileItemTask withPatchFilepath(String filePath) {
 		this.patchFilePath = filePath;
 		return this;
 	}
 
-	public HeathviewElementTask withElementName(String elementName) {
-		this.elementName = elementName;
+	public HeathviewFileItemTask withSource(String source) {
+		this.source = source;
 		return this;
 	}
-
-	public HeathviewElementTask withBeginOutput(boolean beginOutput) {
-		this.beginOutput = beginOutput;
+	public HeathviewFileItemTask withTarget(String target) {
+		this.target = target;
+		return this;
+	}
+	public HeathviewFileItemTask withType(String type) {
+		this.type = type;
 		return this;
 	}
 
@@ -50,23 +54,20 @@ public class HeathviewElementTask implements Serializable,Callable<Boolean,IOExc
 
 	@Override
 	public Boolean call() throws IOException {
-		listener.getLogger().println("\nHEATHVIEW: Beginning Patch File task");
+		listener.getLogger().println("\nHEATHVIEW: Beginning FileItem task");
 		try {
 			FilePath patchFile = new FilePath(new File(patchFilePath));
 			String finalFileContent = "";
 			boolean patchFileExists = patchFile.exists();
 					
 			if (!patchFileExists) {
-				listener.getLogger().println("\nERROR: Cannot create Heathview Element as there is no preceding Create Heathview Patch File section.");
+				listener.getLogger().println("\nERROR: Cannot create Heathview FileItem as there is no preceding Create Heathview Patch File section.");
 				return false;
 			}
 
 			finalFileContent = patchFile.readToString();
-			if (beginOutput) {
-				finalFileContent = finalFileContent.concat(String.format("\t\t<Element name='%s'>\n", elementName));
-			} else {
-				finalFileContent = finalFileContent.concat("\t\t</Element>\n");
-			}			
+			finalFileContent = finalFileContent.concat(String.format("\t\t\t<FileItem source='%s' target='%s' type='%s' />\n", target, source, type));
+
 			patchFile.write(finalFileContent, "UTF-8");
 		} catch (Exception e) {
 			listener.getLogger().println("Failed to create/update file. " + e.getMessage());

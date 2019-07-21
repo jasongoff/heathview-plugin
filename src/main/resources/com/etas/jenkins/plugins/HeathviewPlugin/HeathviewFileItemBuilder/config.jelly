@@ -1,0 +1,23 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
+	xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+		<f:entry title="Source:" field="source">
+			<f:textbox />
+		</f:entry>	
+		<f:entry title="Target:" field="target">
+			<f:textbox />
+		</f:entry>	
+		<f:entry name="type" title="Type:" field="type">
+			<select name="type">
+				<option value="text" selected="${instance.type == 'text' ? 'true':null}">Text</option>
+				<option value="tokenised" selected="${instance.type == 'tokenised' ? 'true':null}">Tokenised</option>
+				<option value="normal" selected="${instance.type == 'normal' ? 'true':null}">Normal</option>
+				<option value="folder" selected="${instance.type == 'folder' ? 'true':null}">Folder</option>
+				<option value="folder all" selected="${instance.type == 'folder all' ? 'true':null}">Folder All</option>
+				<option value="delete" selected="${instance.type == 'delete' ? 'true':null}">Delete</option>
+				<option value="delete folder" selected="${instance.type == 'delete folder' ? 'true':null}">Delete Folder</option>
+				<option value="dll" selected="${instance.type == 'dll' ? 'true':null}">DLL</option>
+				<option value="exe" selected="${instance.type == 'exe' ? 'true':null}">EXE</option>
+				<option value="self-registering dll" selected="${instance.type == 'self-registering dll' ? 'true':null}">Self-registering DLL</option>
+			</select>
+		</f:entry>
+</j:jelly>

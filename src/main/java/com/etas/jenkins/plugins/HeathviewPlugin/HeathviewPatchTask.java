@@ -62,12 +62,11 @@ public class HeathviewPatchTask implements Serializable,Callable<Boolean,IOExcep
 			FilePath releaseFile = new FilePath(new File(releaseFilePath));
 			String finalFileContent = "";
 			String releaseFileContent = "";
-			String eol = System.getProperty("line.separator");
 			boolean patchFileExists = patchFile.exists();
 			boolean releaseFileExists = releaseFile.exists();
 					
 			if (releaseFileExists) {
-				releaseFileContent = releaseFile.readToString().concat(eol);
+				releaseFileContent = releaseFile.readToString();
 			} else {
 				listener.getLogger().println("\nERROR: Cannot create Heathview Patch file as there is no preceding Create Heathview Release File section.");
 				return false;
@@ -82,14 +81,13 @@ public class HeathviewPatchTask implements Serializable,Callable<Boolean,IOExcep
 				releaseFileContent = releaseFileContent.concat(String.format("\t\t<Patch create='open' name='%s'/>\n", buildName));
 			} else {
 				if (patchFileExists) {
-					finalFileContent = patchFile.readToString().concat(eol);
+					finalFileContent = patchFile.readToString();
 					finalFileContent = finalFileContent.concat("\t</Patch>\n</Heath>\n").replaceAll("\n", System.lineSeparator());
 				} else {
 					listener.getLogger().println("\nERROR: Cannot close Heathview Patch File as there is no corresponding opening section or the file does not exist.");
 					return false;
 				}
 			}			
-			listener.getLogger().println(String.format("File content is:\n %s", finalFileContent));
 			patchFile.write(finalFileContent, "UTF-8");
 			releaseFile.write(releaseFileContent, "UTF-8");
 			
@@ -99,7 +97,6 @@ public class HeathviewPatchTask implements Serializable,Callable<Boolean,IOExcep
 			e.printStackTrace(listener.getLogger());	
 			return false;
 		} 
-		listener.getLogger().println("HEATHVIEW: Patch File successfully created/updated at "+ patchFilePath);
 		return true;
 	}
 

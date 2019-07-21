@@ -74,7 +74,7 @@ public class HeathviewReleaseTask implements Serializable,Callable<Boolean,IOExc
 						.concat("<Heath>\n")
 						.concat(String.format("\t<Release create='open' name='%s' env_stop='%s'>\n", 
 																				buildName, restartEnvironment ? "true":"false"))
-						.concat(String.format("\t\t<Order type='%s'>\n</Order>\n", patchOrder));
+						.concat(String.format("\t\t<Order type='%s'>\n\t\t</Order>\n", patchOrder));
 			} else {
 				if (fileExists) {
 					finalFileContent = textFile.readToString();

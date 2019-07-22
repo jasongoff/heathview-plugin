@@ -49,6 +49,20 @@
 		</pluginRepository>
 	</pluginRepositories>
 
+	    <dependencies>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>token-macro</artifactId>
+            <version>2.0</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>structs</artifactId>
+            <version>1.2</version>
+        </dependency>
+    </dependencies>
+
 	<name>Heathview Plugin</name>
 	<description>Creates or updates Heathview Release and Build XML files.</description>
 	<organization>

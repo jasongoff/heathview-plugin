@@ -1,0 +1,20 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+         xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+    <f:entry title="Exe Name">
+        <select class="setting-input" name="exeName">
+            <j:forEach var="inst" items="${descriptor.installations}">
+                <f:option selected="${inst.name==instance.exeName}">${inst.name}</f:option>
+            </j:forEach>
+        </select>
+    </f:entry>
+
+    <f:entry title="Command-line arguments" field="cmdLineArgs">
+        <f:expandableTextbox name="cmdLineArgs" value="${instance.cmdLineArgs}" />
+    </f:entry>
+
+    <f:entry title="Fail build?" field="failBuild">
+        <f:checkbox name="failBuild" value="${instance.failBuild}"
+                    checked="${instance.failBuild}" default="true" />
+    </f:entry>
+</j:jelly>

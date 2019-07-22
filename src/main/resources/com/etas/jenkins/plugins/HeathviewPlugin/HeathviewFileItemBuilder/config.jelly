@@ -7,7 +7,7 @@
 			<f:textbox />
 		</f:entry>	
 		<f:entry name="type" title="Type:" field="type">
-			<select name="type">
+			<select class="setting-input" name="type">
 				<option value="text" selected="${instance.type == 'text' ? 'true':null}">Text</option>
 				<option value="tokenised" selected="${instance.type == 'tokenised' ? 'true':null}">Tokenised</option>
 				<option value="normal" selected="${instance.type == 'normal' ? 'true':null}">Normal</option>

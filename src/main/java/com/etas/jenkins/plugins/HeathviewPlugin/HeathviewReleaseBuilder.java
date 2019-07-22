@@ -31,7 +31,7 @@ public class HeathviewReleaseBuilder extends Builder {
     /**
      * We'll use this from the <tt>config.jelly</tt>.
      */
-    public String patchOrder() {
+    public String getPatchOrder() {
         return patchOrder;
     }
     
@@ -43,7 +43,7 @@ public class HeathviewReleaseBuilder extends Builder {
         return beginOutput;
     }
 
-    public boolean restartEnvironment() {
+    public boolean getRestartEnvironment() {
         return restartEnvironment;
     }
     

@@ -66,7 +66,7 @@ public class HeathviewFileItemTask implements Serializable,Callable<Boolean,IOEx
 			}
 
 			finalFileContent = patchFile.readToString();
-			finalFileContent = finalFileContent.concat(String.format("\t\t\t<FileItem source='%s' target='%s' type='%s' />\n", target, source, type));
+			finalFileContent = finalFileContent.concat(String.format("\t\t\t<FileItem source='%s' target='%s' type='%s' />\n", source, target, type));
 
 			patchFile.write(finalFileContent, "UTF-8");
 		} catch (Exception e) {

@@ -4,7 +4,7 @@
 			<f:textbox />
 		</f:entry>	
 		<f:entry title="Target:" field="target">
-			<f:textbox />
+			<f:textbox default="%BASEDIR%"/>
 		</f:entry>	
 		<f:entry name="type" title="Type:" field="type">
 			<select class="setting-input" name="type">
